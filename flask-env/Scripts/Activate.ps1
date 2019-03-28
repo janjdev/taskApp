@@ -27,7 +27,7 @@ function global:deactivate ([switch]$NonDestructive) {
 
 deactivate -nondestructive
 
-$env:VIRTUAL_ENV="C:\Users\User1\Documents\Courses\LC101\unit2\build-a-blog\flask-env"
+$env:VIRTUAL_ENV="D:\Courses\Development\Programming\Python\LaunchCode\LC101\unit2\build-a-blog\flask-env"
 
 if (! $env:VIRTUAL_ENV_DISABLE_PROMPT) {
     # Set the prompt to include the env name
