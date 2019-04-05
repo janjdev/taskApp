@@ -8,7 +8,9 @@
             <input type="text" name='task' />
         </label>
         <input type="submit" value='Add Task' />
+         <span id="message" class="{{hide}}"> Please, enter a task </span>
     </form>
+  
 
     <hr />
 
@@ -18,7 +20,7 @@
 
         <ul>
             {% for task in tasks %}
-            <li>{{task.name}}
+            <li>{{task.task_content}}
                 <form method="POST" action="/delete-task" style="display:inline-block;">
                     <input type="hidden" name="task-id" value="{{task.id}}" />
                     <input type="submit" value="Done!" />
@@ -35,7 +37,7 @@
 
     <ul>
         {% for task in completed_tasks %}
-        <li>{{task.name}}</li>
+        <li>{{task.task_content}}</li>
         {% endfor %}
     </ul>
 

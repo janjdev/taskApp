@@ -19,18 +19,41 @@ class Task(db.Model):
 tasks = []
 
 @app.route('/', methods=['GET', 'POST'])
-def todos():
+def login():
+    user = False
+    if user:
+        return render_template('todos.html', title="Get It Down")
+    else:
+         return render_template('login.html', user_action='Sign In', alternative='Or login With')
+
+@app.route('/todos.html', methods=['GET', 'POST'])
+def todos():   
     if request.method == 'POST':
         task_name = request.form['task']
         if task_name != '':
             new_task = Task(task_name)
             db.session.add(new_task)
             db.session.commit()
+            hide  = 'hide'
+        else:
+            hide = 'show'
+    else: hide = 'hide'
 
 
 
-    tasks = Task.query.all()
-    return render_template('todos.html', tasks = tasks)
+    tasks = Task.query.filter_by(complete=0).all()
+    completed_tasks = Task.query.filter_by(complete=1).all()
+    return render_template('todos.html',title="Get It Done!", tasks=tasks, completed_tasks=completed_tasks, hide=hide)
+
+@app.route('/delete-task', methods=['POST'])
+def delete_task():
+     task_id = int(request.form['task-id'])
+     task = Task.query.get(task_id)
+     task.complete = 1
+     db.session.add(task)
+     db.session.commit()
+
+     return redirect('/')
 
 if (__name__) == '__main__':
     app.run()
