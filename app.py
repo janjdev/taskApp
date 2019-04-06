@@ -1,7 +1,6 @@
 from flask import Flask, request, redirect, render_template, session, escape, url_for, flash
 from flask_sqlalchemy import SQLAlchemy
 import pymysql
-from sqlalchemy import or_
 app = Flask(__name__)
 app.secret_key = b'\xe5\\\xd6\xea\xde\xde\x85\xbd\xdd\xb9A\x8d_\xc7Lj'
 app.config["CACHE_TYPE"] = "null"
