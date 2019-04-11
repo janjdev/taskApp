@@ -17,7 +17,7 @@
             <a class="nav-link" href="/logout">Log Out</a>
             </li>
         </ul>
-        <form class="form-inline my-2 my-lg-0">
+        <form id='search' class="form-inline my-2 my-lg-0">
             <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
             <button class="btn btn-outline-light my-2 my-sm-0" type="submit">Search</button>
         </form>
@@ -25,7 +25,8 @@
         </nav>
     </header>
 <div class="container">
-	<form method='post'>
+    <div id="alert_placeholder"></div>
+	<form id='newTask' method='post' action="/addTask">
         <label>
             New Task:
             <input type="text" name='task' placeholder="Your Task"/>
@@ -36,32 +37,37 @@
   
 
     <hr />
-
+    
+    <div id="incomplete">
     {% if tasks|length == 0 %}
     <p>No tasks yet</p>
     {% else %}
 
-        <ul>
+        <ul id="incomplete-tasks">
             {% for task in tasks %}
             <li>{{task.task_content}}
-                <form method="POST" action="/delete-task" style="display:inline-block;">
+                <form id='delete' method="POST" action="/delete-task" style="display:inline-block;">
                     <input type="hidden" name="task-id" value="{{task.id}}" />
                     <input type="submit" value="Done!" />
                 </form>
             </li>
             {% endfor %}
         </ul>
-
     {% endif %}
+</div>
+    <!-- <li id="new_task">
+
+    </li> -->
 
     <hr />
-
+<div id="complete">
     <h2>Completed</h2>
 
-    <ul>
+    <ul id="complete-tasks">
         {% for task in completed_tasks %}
         <li>{{task.task_content}}</li>
         {% endfor %}
-    </ul>
+    </ul>        
+    </div>
 </div>
 {% endblock %}

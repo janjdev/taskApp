@@ -1,4 +1,4 @@
-from flask import Flask, request, redirect, render_template, session, escape, url_for, flash
+from flask import Flask, request, redirect, render_template, session, escape, url_for, flash, jsonify
 from flask_sqlalchemy import SQLAlchemy
 import pymysql
 from sqlalchemy import or_
@@ -76,26 +76,34 @@ def register():
     else:
          return render_template('login.html', user_action='Register', alternative='Or register with', signin_action='/register', log_reg_link="/login", username_hide='hide', needsTo='Sign In')
 
+@app.before_request
+def require_login():
+    allowed_routes = ['login', 'register']
+    if request.endpoint not in allowed_routes and 'authenticated' not in session:
+        return redirect('/login')
 
 @app.route('/', methods=['GET', 'POST'])
 def todos():
     if 'id' in session:
-        if request.method == 'POST':
-            task_name = request.form['task']
-            if task_name != '':
-                new_task = Task(task_name, 0, session.get('id'))
-                db.session.add(new_task)
-                db.session.commit()
-                hide  = 'hide'
-            else:
-                hide = 'show'
-        else: 
-            hide = 'hide'
+        user = User.query.filter_by(id=session.get('id')).first()
         tasks = Task.query.filter((Task.user_id == session.get('id')) & (Task.complete==0) ).all()
         completed_tasks = Task.query.filter((Task.user_id == session.get('id')) & (Task.complete==1) ).all()
-        return render_template('todos.html',title="Get It Done!", tasks=tasks, completed_tasks=completed_tasks, hide=hide)
+        return render_template('todos.html',title="Get It Done!", tasks=tasks, completed_tasks=completed_tasks, hide='hide')
     else: 
+        flash('Please, login to add tasks.', 'danger')
         return redirect(url_for('login'))
+
+@app.route('/addTask', methods=['POST'])
+def addTask():
+    task_name = request.form['task']
+    if task_name != '':
+        new_task = Task(task_name, 0, session.get('id'))
+        db.session.add(new_task)
+        db.session.commit()
+        taskId = new_task.id
+        return jsonify({'success': 'success', 'message': 'Tasks updated', 'alertType': 'secondary'})
+    else:
+        return jsonify({'error': 'error', 'message': 'Please, enter a task.', 'alertType': 'info' })
 
 @app.route('/delete-task', methods=['POST'])
 def delete_task():

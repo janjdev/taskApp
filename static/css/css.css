@@ -48,3 +48,9 @@
     vertical-align: sub;
     color: whitesmoke;
 }
+#alert_placeholder{
+    position: absolute;
+    top: 100px;
+    transform: translateX(-50%);
+    left: 50%;
+}
