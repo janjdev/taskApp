@@ -16,9 +16,8 @@ class Task(db.Model):
     task_content = db.Column(db.String(255), nullable=False)
     complete = db.Column(db.Integer, default=0, nullable=False)
 
-    def __init__(self, task_content, complete, user_id):
+    def __init__(self, task_content, user_id):
         self.task_content = task_content
-        self.complete = complete
         self.user_id = user_id
 
 class User(db.Model):
