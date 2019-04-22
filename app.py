@@ -65,7 +65,6 @@ def register():
                 new_user = User(email=email, password=password, username='')
                 db.session.add(new_user)
                 db.session.commit()
-                # TODO - "remember" the user
                 return redirect(url_for('todos'))
             else:
                 flash('An account with this user already exists. Please, sign in.')
