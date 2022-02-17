@@ -2,20 +2,20 @@
 
 {% block content %}
 <div class="container-login100">
-		<div class="wrap-login100 p-l-55 p-r-55 p-t-80 p-b-30"><!--style="background-image: url('{{ url_for('static', filename='images/bg-01.jpg')}}');"-->
+		<div class="wrap-login100 p-l-55 p-r-55 p-t-80 p-b-30" style="background-image: url({{ url_for('static', filename='images/bg-01.jpg') }} )";>
 			<form id="auth" class="login100-form validate-form" method="post" action="{{signin_action}}">
 			{% with messages = get_flashed_messages() %}
-					{% if messages %}
-						{% for message in messages %}
+				{% if messages %}
+					{% for message in messages %}
 						<div class="alert alert-{{category}}  alert-dismissible fade show" role="alert">{{message}}<button type="button" class="close" data-dismiss="alert" aria-label="Close" onclick="window.location.href='/login'">
-    <span aria-hidden="true">&times;</span>
-  </button></div>
-						{% endfor %}
-					{% endif %}
+    						<span aria-hidden="true">&times;</span>
+  							</button></div>
+					{% endfor %}
+				{% endif %}
 
 				{% endwith %}	
 				<span class="login100-form-title p-b-37">
-					{{user_action}}
+					{{user_action}} <img class="logo login" src="{{ url_for('static', filename='images/icons/logo.png')}}"/>
 				</span>
 
 				<div class="wrap-input100 validate-input m-b-20 {{email_hide}}" data-validate="Enter email" data-formAction="{{login}}">

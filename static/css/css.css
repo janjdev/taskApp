@@ -27,6 +27,17 @@
     color: whitesmoke;
 }
 
+.logo{
+    max-width: 100%;
+    width: 9%;
+    vertical-align:top;
+}
+
+.logo.login{
+    vertical-align: middle;
+    width: 15%;
+}
+
 .navbar-light .navbar-brand h1 {
     font-size: 40px;
     font-family: Alegreya Sans SC;

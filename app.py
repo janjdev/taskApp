@@ -74,11 +74,11 @@ def register():
     else:
          return render_template('login.html', user_action='Register', alternative='Or register with', signin_action='/register', log_reg_link="/login", username_hide='hide', needsTo='Sign In')
 
-@app.before_request
-def require_login():
-    allowed_routes = ['login', 'register']
-    if request.endpoint not in allowed_routes and 'authenticated' not in session:
-        return redirect('/login')
+# @app.before_request
+# def require_login():
+#     allowed_routes = ['login', 'register']
+#     if request.endpoint not in allowed_routes and 'authenticated' not in session:
+#         return redirect('/login')
 
 @app.route('/', methods=['GET', 'POST'])
 def todos():
@@ -94,8 +94,9 @@ def todos():
 @app.route('/addTask', methods=['POST'])
 def addTask():
     task_name = request.form['task']
+    print(task_name)
     if task_name != '':
-        new_task = Task(task_name, 0, session.get('id'))
+        new_task = Task(task_name, session.get('id'))
         db.session.add(new_task)
         db.session.commit()
         taskId = new_task.id
